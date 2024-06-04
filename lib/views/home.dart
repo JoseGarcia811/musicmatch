@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_animated_button/flutter_animated_button.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:iconsax/iconsax.dart';
@@ -22,9 +23,27 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   final Map<int, String> _buttonTextAdd = {};
   final List<Map<String, String>> imgList = [
-    {'image': 'travesia.jpg', 'title': 'Grupo Travesia'},
-    {'image': 'saul.jpg', 'title': 'Dinastia'},
-    {'image': 'arthul.jpg', 'title': 'Arthul'},
+    {
+      'image': 'travesia.jpg',
+      'title': 'Grupo Travesia',
+      'gender': 'Bachata',
+      'dayDesc': 'Vie.',
+      'dayInt': '07'
+    },
+    {
+      'image': 'saul.jpg',
+      'title': 'Dinastia',
+      'gender': 'Merengue',
+      'dayDesc': 'Sab.',
+      'dayInt': '08'
+    },
+    {
+      'image': 'arthul.jpg',
+      'title': 'Arthul',
+      'gender': 'Rock',
+      'dayDesc': 'Dom.',
+      'dayInt': '09'
+    },
   ];
 
   @override
@@ -32,7 +51,6 @@ class _HomeState extends State<Home> {
     double screenHeight = MediaQuery.of(context).size.height;
     final List<String> items =
         List<String>.generate(10, (i) => "Item ${i + 1}");
-
     return Scaffold(
       backgroundColor: Colors.white,
       body: Stack(
@@ -40,8 +58,8 @@ class _HomeState extends State<Home> {
           ClipPath(
             clipper: BottomShapeClipper(),
             child: Container(
-              color: backgroundColorDark,
-              height: screenHeight * 0.5,
+              color: Colors.deepPurple,
+              height: screenHeight * 0.59,
             ),
           ),
           SafeArea(
@@ -49,15 +67,14 @@ class _HomeState extends State<Home> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5),
+                  padding: EdgeInsets.symmetric(horizontal: 21.0, vertical: 5),
                   child: Row(
                     children: <Widget>[
-
                       Spacer(
                         flex: 8,
                       ),
                       Icon(
-                        Iconsax.notification,
+                        Iconsax.notification_bing5,
                         color: Colors.white70,
                       ),
                     ],
@@ -66,10 +83,9 @@ class _HomeState extends State<Home> {
                 const Row(
                   children: <Widget>[
                     Padding(
-                      padding:
-                          EdgeInsets.only(left: 40.0, right: 8,bottom: 10),
+                      padding: EdgeInsets.only(left: 20.0, right: 8),
                       child: SizedBox(
-                        width: 300,
+                        width: 315,
                         height: 35,
                         child: TextField(
                           style: TextStyle(color: Colors.white70),
@@ -82,7 +98,7 @@ class _HomeState extends State<Home> {
                               color: Colors.white70,
                             ),
                             filled: true,
-                            fillColor: backgroundColorDark,
+                            fillColor: Colors.deepPurple,
                             border: OutlineInputBorder(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(5)),
@@ -103,13 +119,35 @@ class _HomeState extends State<Home> {
                     ),
                     Padding(
                       padding:
-                          EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
+                          EdgeInsets.symmetric(horizontal: 5.0, vertical: 0),
                       child: Icon(
                         Iconsax.filter,
                         color: Colors.white70,
                       ),
                     ),
                   ],
+                ),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
+                  child: Row(
+                    children: [
+                      Text(
+                        "Próximos Eventos",
+                        style: TextStyle(
+                            color: Colors.white70,
+                            fontSize: 19,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      Spacer(),
+                      Text(
+                        "Ver todos",
+                        style: TextStyle(
+                          color: Colors.white70,
+                          fontSize: 15,
+                        ),
+                      )
+                    ],
+                  ),
                 ),
                 CarouselSlider(
                   items: imgList.map((item) {
@@ -139,11 +177,49 @@ class _HomeState extends State<Home> {
                             ),
                           ),
                           Positioned(
+                              top: 0,
+                              width: 70,
+                              child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10, vertical: 0),
+                                  child: Image.asset(
+                                      "assets/icons/calendar.png"))),
+                          Positioned(
+                              top: 20,
+                              left: 13,
+                              child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10, vertical: 0),
+                                  child: Column(children: [
+                                    Row(children: [
+                                      Text(
+                                        "${item["dayDesc"]}",
+                                        style: const TextStyle(fontSize: 13),
+                                      )
+                                    ]),
+                                  ]))),
+                          Positioned(
+                              top: 30,
+                              left: 12,
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 10, vertical: 0),
+                                child: Row(children: [
+                                  Text(
+                                    "${item["dayInt"]}",
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20),
+                                  )
+                                ]),
+                              )),
+                          Positioned(
                             width: 305,
                             bottom: 0,
                             left: 0,
                             child: Container(
-                              padding: const EdgeInsets.only(left: 13, right: 13,top: 4,bottom: 4),
+                              padding: const EdgeInsets.only(
+                                  left: 13, right: 13, top: 4, bottom: 4),
                               decoration: const BoxDecoration(
                                 color: Colors.black87,
                                 borderRadius: BorderRadius.only(
@@ -151,14 +227,22 @@ class _HomeState extends State<Home> {
                                   bottomRight: Radius.circular(20),
                                 ),
                               ),
-                              child:   Row(
+                              child: Row(
                                 children: [
                                   Text(
                                     item['title']!,
                                     style: const TextStyle(
-                                      color: Colors.white,
+                                      color: Colors.white70,
                                       fontWeight: FontWeight.bold,
-                                      fontSize: 17,
+                                      fontSize: 15,
+                                    ),
+                                  ),
+                                  Text(
+                                    " - (${item['gender']})",
+                                    style: const TextStyle(
+                                      color: Colors.white70,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 15,
                                     ),
                                   ),
                                   const Spacer(),
@@ -168,7 +252,10 @@ class _HomeState extends State<Home> {
                                   ),
                                   const Text(
                                     "4.7",
-                                    style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 15),
+                                    style: TextStyle(
+                                        color: Colors.white70,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 15),
                                   )
                                 ],
                               ),
@@ -184,6 +271,95 @@ class _HomeState extends State<Home> {
                     enableInfiniteScroll: true,
                   ),
                 ),
+                Padding(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 17, vertical: 0),
+                    child: Row(children: [
+                      Column(children: [
+                        Container(
+                            width: 55,
+                            padding: EdgeInsets.all(10),
+                            decoration: const BoxDecoration(
+                                color: Colors.white,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(25))),
+                            child: Image.asset(
+                              "assets/icons/bachata.png",
+                            )),
+                        const Text(
+                          "Bachata",
+                          style: TextStyle(color: Colors.white),
+                        )
+                      ]),
+                      const Spacer(),
+                      Column(children: [
+                        Container(
+                            width: 55,
+                            padding: EdgeInsets.all(10),
+                            decoration: const BoxDecoration(
+                                color: Colors.white,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(25))),
+                            child: Image.asset(
+                              "assets/icons/merengue.png",
+                            )),
+                        const Text(
+                          "Merengue",
+                          style: TextStyle(color: Colors.white),
+                        )
+                      ]),
+                      const Spacer(),
+                      Column(children: [
+                        Container(
+                            width: 55,
+                            padding: EdgeInsets.all(10),
+                            decoration: const BoxDecoration(
+                                color: Colors.white,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(25))),
+                            child: Image.asset(
+                              "assets/icons/acordeon.png",
+                            )),
+                        const Text(
+                          "Tipico",
+                          style: TextStyle(color: Colors.white),
+                        )
+                      ]),
+                      const Spacer(),
+                      Column(children: [
+                        Container(
+                            width: 55,
+                            padding: EdgeInsets.all(10),
+                            decoration: const BoxDecoration(
+                                color: Colors.white,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(25))),
+                            child: Image.asset(
+                              "assets/icons/salsa.png",
+                            )),
+                        const Text(
+                          "Salsa",
+                          style: TextStyle(color: Colors.white),
+                        )
+                      ]),
+                      const Spacer(),
+                      Column(children: [
+                        Container(
+                            width: 55,
+                            padding: EdgeInsets.all(10),
+                            decoration: const BoxDecoration(
+                                color: Colors.white,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(25))),
+                            child: Image.asset(
+                              "assets/icons/rock.png",
+                            )),
+                        const Text(
+                          "Rock",
+                          style: TextStyle(color: Colors.white),
+                        )
+                      ]),
+                    ])),
                 Expanded(
                   child: Container(
                     margin: const EdgeInsets.only(left: 10, right: 10),
@@ -205,62 +381,58 @@ class _HomeState extends State<Home> {
                                 ),
                                 child: Column(
                                   children: [
-                                    Container(
-                                      child: Stack(
-                                        children: [
-                                          Container(
-                                            height: 150,
+                                    Stack(
+                                      children: [
+                                        Container(
+                                          height: 150,
+                                          decoration: const BoxDecoration(
+                                            borderRadius: BorderRadius.only(
+                                              topLeft: Radius.circular(16.0),
+                                              topRight: Radius.circular(16.0),
+                                            ),
+                                            image: DecorationImage(
+                                              image: AssetImage(
+                                                  'assets/Backgrounds/placeholder.jpg'),
+                                              fit: BoxFit.cover,
+                                            ),
+                                          ),
+                                        ),
+                                        Positioned(
+                                          bottom: 0,
+                                          left: 0,
+                                          right: 0,
+                                          child: Container(
+                                            height: 4.0,
                                             decoration: const BoxDecoration(
-                                              borderRadius: BorderRadius.only(
-                                                topLeft: Radius.circular(16.0),
-                                                topRight: Radius.circular(16.0),
-                                              ),
-                                              image: DecorationImage(
-                                                image: AssetImage(
-                                                    'assets/Backgrounds/placeholder.jpg'),
-                                                fit: BoxFit.cover,
+                                              gradient: LinearGradient(
+                                                colors: [
+                                                  Colors.red,
+                                                  Colors.orange,
+                                                  Colors.yellow,
+                                                  Colors.orange,
+                                                  Colors.red,
+                                                ],
+                                                begin: Alignment.centerLeft,
+                                                end: Alignment.centerRight,
                                               ),
                                             ),
                                           ),
-                                          Positioned(
-                                            bottom: 0,
-                                            left: 0,
+                                        ),
+                                        const Positioned(
+                                            top: 0,
                                             right: 0,
-                                            child: Container(
-                                              height: 4.0,
-                                              decoration: const BoxDecoration(
-                                                gradient: LinearGradient(
-                                                  colors: [
-                                                    Colors.red,
-                                                    Colors.orange,
-                                                    Colors.yellow,
-                                                    Colors.green,
-                                                    Colors.blue,
-                                                    Colors.indigo,
-                                                  ],
-                                                  begin: Alignment.centerLeft,
-                                                  end: Alignment.centerRight,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                          const Positioned(
-                                              top: 0,
-                                              right: 0,
-                                              child: Card(
-                                                elevation: 7,
-                                                color: Colors.lightGreen,
-                                                child: Padding(
-                                                    padding: EdgeInsets.all(10),
-                                                    child: Text(
-                                                      "Pianista",
-                                                      style: TextStyle(
-                                                          color:
-                                                              Colors.white70),
-                                                    )),
-                                              ))
-                                        ],
-                                      ),
+                                            child: Card(
+                                              elevation: 7,
+                                              color: Colors.lightGreen,
+                                              child: Padding(
+                                                  padding: EdgeInsets.all(10),
+                                                  child: Text(
+                                                    "Pianista",
+                                                    style: TextStyle(
+                                                        color: Colors.white70),
+                                                  )),
+                                            ))
+                                      ],
                                     ),
                                     const Padding(
                                       padding: EdgeInsets.only(
