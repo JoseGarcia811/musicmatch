@@ -11,6 +11,7 @@ import 'package:flutter_animated_button/flutter_animated_button.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:iconsax/iconsax.dart';
 
+import '../utils/category_home_list.dart';
 import '../utils/constants.dart';
 
 class Home extends StatefulWidget {
@@ -21,36 +22,105 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+
+
   final Map<int, String> _buttonTextAdd = {};
+  final List<Map<String, String>> categoryList = [
+    {'image': 'bachata.jpg', 'categoryName': 'Bachata'},
+    {'image': 'merengue.png', 'categoryName': 'Merengue'},
+    {'image': 'acordeon.png', 'categoryName': 'Tipico'},
+    {'image': 'salsa.png', 'categoryName': 'Salsa'},
+    {'image': 'rock.png', 'categoryName': 'Rock'}
+  ];
   final List<Map<String, String>> imgList = [
     {
       'image': 'travesia.jpg',
       'title': 'Grupo Travesia',
       'gender': 'Bachata',
       'dayDesc': 'Vie.',
-      'dayInt': '07'
+      'dayInt': '07',
+      'percent': '4.7'
     },
     {
       'image': 'saul.jpg',
       'title': 'Dinastia',
-      'gender': 'Merengue',
+      'gender': 'Bachata/Merengue',
       'dayDesc': 'Sab.',
-      'dayInt': '08'
+      'dayInt': '08',
+      'percent': '3.6'
     },
     {
       'image': 'arthul.jpg',
       'title': 'Arthul',
       'gender': 'Rock',
       'dayDesc': 'Dom.',
-      'dayInt': '09'
+      'dayInt': '09',
+      'percent': '3.3'
+    },
+  ];
+  final List<Map<String, dynamic>> mainList = [
+    {
+      'image': 'saul.jpg',
+      'title': 'Saul Rodriguez y Dinastia',
+      'gender': 'Bachata/Merengue',
+      'gendId': [0,1],
+      'countLike': '6',
+      'countRequest': '21',
+      'activityType': 'Conga',
+      'location': 'Santo Domingo',
+      'dateActivity': 'Sab. 08/05/2024',
+      'timeActivity': '9:00pm a 12:00am',
+      'payment': '2,500.00',
+      'instagram' : '@grupo.travesia',
+      'youtube' : 'grupotravesia'
+    },
+    {
+      'image': 'travesia.jpg',
+      'title': 'Grupo Travesia',
+      'gender': 'Bachata',
+      'gendId': [0],
+      'countLike': '15',
+      'countRequest': '30',
+      'activityType': 'Pianista',
+      'location': 'Santo Domingo',
+      'dateActivity': 'Vie. 07/05/2024',
+      'timeActivity': '6:00pm a 11:00pm',
+      'payment': '3,500.00',
+      'instagram' : '@grupo.travesia',
+      'youtube' : 'grupotravesia'
+    },
+    {
+      'image': 'arthul.jpg',
+      'title': 'Arthul y su banda total',
+      'gender': 'Rock',
+      'gendId': [4],
+      'countLike': '0',
+      'countRequest': '2',
+      'activityType': 'Baterista',
+      'location': 'San Cristobal',
+      'dateActivity': 'Dom. 09/05/2024',
+      'timeActivity': '10:00pm a 1:00am',
+      'payment': '4,000.00',
+      'instagram' : '@grupo.travesia',
+      'youtube' : 'grupotravesia'
     },
   ];
 
   @override
+  void initState() {
+    super.initState();
+    updateFilteredList(0);
+  }
+
+  List<Map<String, dynamic>> filteredList = [];
+  void updateFilteredList(int gendId) {
+    setState(() {
+      filteredList = mainList.where((e) => e['gendId'].contains(gendId)).toList();
+    });
+  }
+  @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
-    final List<String> items =
-        List<String>.generate(10, (i) => "Item ${i + 1}");
     return Scaffold(
       backgroundColor: Colors.white,
       body: Stack(
@@ -59,7 +129,7 @@ class _HomeState extends State<Home> {
             clipper: BottomShapeClipper(),
             child: Container(
               color: Colors.deepPurple,
-              height: screenHeight * 0.59,
+              height: screenHeight * 0.62,
             ),
           ),
           SafeArea(
@@ -194,7 +264,9 @@ class _HomeState extends State<Home> {
                                     Row(children: [
                                       Text(
                                         "${item["dayDesc"]}",
-                                        style: const TextStyle(fontSize: 13),
+                                        style: const TextStyle(
+                                            fontSize: 13,
+                                            fontStyle: FontStyle.italic),
                                       )
                                     ]),
                                   ]))),
@@ -250,9 +322,9 @@ class _HomeState extends State<Home> {
                                     Iconsax.star1,
                                     color: Colors.yellow,
                                   ),
-                                  const Text(
-                                    "4.7",
-                                    style: TextStyle(
+                                  Text(
+                                    item['percent']!,
+                                    style: const TextStyle(
                                         color: Colors.white70,
                                         fontWeight: FontWeight.bold,
                                         fontSize: 15),
@@ -271,102 +343,15 @@ class _HomeState extends State<Home> {
                     enableInfiniteScroll: true,
                   ),
                 ),
-                Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 17, vertical: 0),
-                    child: Row(children: [
-                      Column(children: [
-                        Container(
-                            width: 55,
-                            padding: EdgeInsets.all(10),
-                            decoration: const BoxDecoration(
-                                color: Colors.white,
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(25))),
-                            child: Image.asset(
-                              "assets/icons/bachata.png",
-                            )),
-                        const Text(
-                          "Bachata",
-                          style: TextStyle(color: Colors.white),
-                        )
-                      ]),
-                      const Spacer(),
-                      Column(children: [
-                        Container(
-                            width: 55,
-                            padding: EdgeInsets.all(10),
-                            decoration: const BoxDecoration(
-                                color: Colors.white,
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(25))),
-                            child: Image.asset(
-                              "assets/icons/merengue.png",
-                            )),
-                        const Text(
-                          "Merengue",
-                          style: TextStyle(color: Colors.white),
-                        )
-                      ]),
-                      const Spacer(),
-                      Column(children: [
-                        Container(
-                            width: 55,
-                            padding: EdgeInsets.all(10),
-                            decoration: const BoxDecoration(
-                                color: Colors.white,
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(25))),
-                            child: Image.asset(
-                              "assets/icons/acordeon.png",
-                            )),
-                        const Text(
-                          "Tipico",
-                          style: TextStyle(color: Colors.white),
-                        )
-                      ]),
-                      const Spacer(),
-                      Column(children: [
-                        Container(
-                            width: 55,
-                            padding: EdgeInsets.all(10),
-                            decoration: const BoxDecoration(
-                                color: Colors.white,
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(25))),
-                            child: Image.asset(
-                              "assets/icons/salsa.png",
-                            )),
-                        const Text(
-                          "Salsa",
-                          style: TextStyle(color: Colors.white),
-                        )
-                      ]),
-                      const Spacer(),
-                      Column(children: [
-                        Container(
-                            width: 55,
-                            padding: EdgeInsets.all(10),
-                            decoration: const BoxDecoration(
-                                color: Colors.white,
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(25))),
-                            child: Image.asset(
-                              "assets/icons/rock.png",
-                            )),
-                        const Text(
-                          "Rock",
-                          style: TextStyle(color: Colors.white),
-                        )
-                      ]),
-                    ])),
+                SizedBox(height: 85, child: CategoryHomeListView(updateFilteredList: updateFilteredList,)),
                 Expanded(
                   child: Container(
                     margin: const EdgeInsets.only(left: 10, right: 10),
                     color: backgorundBody,
                     child: ListView.builder(
-                      itemCount: items.length,
+                      itemCount: filteredList.length,
                       itemBuilder: (context, index) {
+                        var main = filteredList[index];
                         return AnimationConfiguration.staggeredList(
                           position: index,
                           duration: const Duration(milliseconds: 900),
@@ -385,14 +370,13 @@ class _HomeState extends State<Home> {
                                       children: [
                                         Container(
                                           height: 150,
-                                          decoration: const BoxDecoration(
-                                            borderRadius: BorderRadius.only(
+                                          decoration:   BoxDecoration(
+                                            borderRadius: const BorderRadius.only(
                                               topLeft: Radius.circular(16.0),
                                               topRight: Radius.circular(16.0),
                                             ),
                                             image: DecorationImage(
-                                              image: AssetImage(
-                                                  'assets/Backgrounds/placeholder.jpg'),
+                                              image: AssetImage("assets/Backgrounds/${main['image']!}"),
                                               fit: BoxFit.cover,
                                             ),
                                           ),
@@ -418,24 +402,82 @@ class _HomeState extends State<Home> {
                                             ),
                                           ),
                                         ),
-                                        const Positioned(
-                                            top: 0,
+                                        Positioned(
+                                            bottom: 4,
                                             right: 0,
-                                            child: Card(
-                                              elevation: 7,
-                                              color: Colors.lightGreen,
-                                              child: Padding(
-                                                  padding: EdgeInsets.all(10),
-                                                  child: Text(
-                                                    "Pianista",
-                                                    style: TextStyle(
-                                                        color: Colors.white70),
-                                                  )),
-                                            ))
+                                            child: Container(
+                                                padding: const EdgeInsets.only(
+                                                    left: 5, right: 10),
+                                                width: 348,
+                                                color: backgroundColor2,
+                                                child:   Column(
+                                                  children: [
+                                                    Row(
+                                                      children: [
+                                                        Text(
+                                                          main['activityType']!,
+                                                          style: const TextStyle(
+                                                              color: Colors
+                                                                  .white70,
+                                                              fontSize: 17),
+                                                        ),
+                                                        const Spacer(),
+                                                        Row(
+                                                          children: [
+                                                            Padding(
+                                                              padding: const EdgeInsets
+                                                                  .only(
+                                                                      right:
+                                                                          10.0),
+                                                              child: Text(
+                                                                main['countLike']!,
+                                                                style: const TextStyle(
+                                                                    color: Colors
+                                                                        .white70,
+                                                                    fontSize:
+                                                                        17),
+                                                              ),
+                                                            ),
+                                                            const Padding(
+                                                              padding: EdgeInsets
+                                                                  .only(
+                                                                  right:
+                                                                  10.0),
+                                                              child: Icon(
+                                                              Iconsax.like_14,
+                                                              color: Colors
+                                                                  .white70,
+                                                              size: 25,
+                                                            ),),
+                                                          ],
+                                                        ),
+                                                        Padding(
+                                                          padding: const EdgeInsets
+                                                              .only(
+                                                              right:
+                                                              10.0),
+                                                          child: Text(
+                                                            main['countRequest']!,
+                                                            style: const TextStyle(
+                                                                color: Colors
+                                                                    .white70,
+                                                                fontSize:
+                                                                17),
+                                                          ),
+                                                        ),
+                                                        const Icon(
+                                                          Iconsax.user_cirlce_add,
+                                                          color: Colors.white70,
+                                                          size: 25,
+                                                        )
+                                                      ],
+                                                    ),
+                                                  ],
+                                                )))
                                       ],
                                     ),
-                                    const Padding(
-                                      padding: EdgeInsets.only(
+                                     Padding(
+                                      padding: const EdgeInsets.only(
                                           left: 16.0, right: 16.0, top: 5),
                                       child: Column(
                                         children: [
@@ -446,8 +488,8 @@ class _HomeState extends State<Home> {
                                                   overflow:
                                                       TextOverflow.ellipsis,
                                                   maxLines: 2,
-                                                  "Grupo Travesia",
-                                                  style: TextStyle(
+                                                  main['title']!,
+                                                  style: const TextStyle(
                                                     fontSize: 18,
                                                     fontWeight: FontWeight.bold,
                                                   ),
@@ -458,32 +500,32 @@ class _HomeState extends State<Home> {
                                         ],
                                       ),
                                     ),
-                                    const Padding(
-                                      padding: EdgeInsets.only(
+                                     Padding(
+                                      padding: const EdgeInsets.only(
                                           left: 16.0, right: 16.0, bottom: 5),
                                       child: Column(
                                         children: [
                                           Row(
                                             children: [
-                                              Text("Bachata"),
-                                              Spacer(),
-                                              Icon(
+                                              Text(main['gender']!),
+                                              const Spacer(),
+                                              const Icon(
                                                 Iconsax.instagram,
                                                 color: Colors.brown,
                                               ),
-                                              Text(" "),
-                                              Icon(
+                                              const Text(" "),
+                                              const Icon(
                                                 Iconsax.play,
                                                 color: Colors.redAccent,
                                               ),
                                             ],
                                           ),
-                                          Divider(color: Colors.grey)
+                                          const Divider(color: Colors.grey)
                                         ],
                                       ),
                                     ),
-                                    const Padding(
-                                      padding: EdgeInsets.only(
+                                     Padding(
+                                      padding:const EdgeInsets.only(
                                           left: 16.0, right: 16.0),
                                       child: Column(
                                         children: [
@@ -498,17 +540,16 @@ class _HomeState extends State<Home> {
                                                   children: [
                                                     Row(
                                                       children: [
-                                                        Icon(
+                                                        const Icon(
                                                           Iconsax.calendar,
                                                           size: 15,
                                                         ),
-                                                        Text("Sabado "),
-                                                        Text("18/05/2024"),
+                                                        Text(main['dateActivity']!),
                                                       ],
                                                     ),
                                                     Row(
                                                       children: [
-                                                        Icon(
+                                                      const Icon(
                                                           Iconsax.timer,
                                                           size: 15,
                                                         ),
@@ -518,7 +559,7 @@ class _HomeState extends State<Home> {
                                                                 TextOverflow
                                                                     .ellipsis,
                                                             maxLines: 2,
-                                                            "9:00pm a 12:00pm",
+                                                            main['timeActivity']!,
                                                           ),
                                                         ),
                                                       ],
@@ -533,20 +574,20 @@ class _HomeState extends State<Home> {
                                                   children: [
                                                     Row(
                                                       children: [
-                                                        Icon(
+                                                       const Icon(
                                                           Iconsax.location,
                                                           size: 15,
                                                         ),
-                                                        Text("Santo Domingo"),
+                                                        Text(main['location']!),
                                                       ],
                                                     ),
                                                     Row(
                                                       children: [
-                                                        Icon(
+                                                       const Icon(
                                                           Iconsax.dollar_circle,
                                                           size: 15,
                                                         ),
-                                                        Text("2,500.00"),
+                                                        Text(main['payment']!),
                                                       ],
                                                     ),
                                                   ],
