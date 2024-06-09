@@ -150,44 +150,52 @@ class _HomeState extends State<Home> {
                     ],
                   ),
                 ),
-                const Row(
+                  Row(
                   children: <Widget>[
                     Padding(
-                      padding: EdgeInsets.only(left: 20.0, right: 8),
+                      padding: const EdgeInsets.only(left: 20.0, right: 8),
                       child: SizedBox(
                         width: 315,
                         height: 35,
-                        child: TextField(
-                          style: TextStyle(color: Colors.white70),
-                          decoration: InputDecoration(
-                            hintStyle: TextStyle(color: Colors.white70),
-                            hintText: "Buscar...",
-                            contentPadding: EdgeInsets.only(top: 5),
-                            prefixIcon: Icon(
-                              Icons.search,
-                              color: Colors.white70,
-                            ),
-                            filled: true,
-                            fillColor: Colors.deepPurple,
-                            border: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(5)),
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(5)),
-                              borderSide: BorderSide(color: Colors.white70),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(5)),
-                              borderSide: BorderSide(color: Colors.white70),
+                        child:   Container(
+                          decoration: const BoxDecoration(
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black26,
+                                blurRadius: 14,
+                                offset: Offset(0, 4),
+                              ),
+                            ],
+                          ),
+                          child: const TextField(
+                            style: TextStyle(color: Colors.white70),
+                            decoration: InputDecoration(
+                              hintStyle: TextStyle(color: Colors.white70),
+                              hintText: "Buscar...",
+                              contentPadding: EdgeInsets.only(top: 5),
+                              prefixIcon: Icon(
+                                Icons.search,
+                                color: Colors.white70,
+                              ),
+                              filled: true,
+                              fillColor: Colors.deepPurple,
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.all(Radius.circular(25)),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.all(Radius.circular(25)),
+                                borderSide: BorderSide(color: Colors.white70),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.all(Radius.circular(25)),
+                                borderSide: BorderSide(color: Colors.white70),
+                              ),
                             ),
                           ),
-                        ),
+                        )
                       ),
                     ),
-                    Padding(
+                    const Padding(
                       padding:
                           EdgeInsets.symmetric(horizontal: 5.0, vertical: 0),
                       child: Icon(
@@ -344,6 +352,7 @@ class _HomeState extends State<Home> {
                   ),
                 ),
                 SizedBox(height: 85, child: CategoryHomeListView(updateFilteredList: updateFilteredList,)),
+                (filteredList.isNotEmpty) ?
                 Expanded(
                   child: Container(
                     margin: const EdgeInsets.only(left: 10, right: 10),
@@ -407,7 +416,7 @@ class _HomeState extends State<Home> {
                                             right: 0,
                                             child: Container(
                                                 padding: const EdgeInsets.only(
-                                                    left: 5, right: 10),
+                                                    left: 17, right: 17),
                                                 width: 348,
                                                 color: backgroundColor2,
                                                 child:   Column(
@@ -502,7 +511,7 @@ class _HomeState extends State<Home> {
                                     ),
                                      Padding(
                                       padding: const EdgeInsets.only(
-                                          left: 16.0, right: 16.0, bottom: 5),
+                                          left: 16.0, right: 16.0),
                                       child: Column(
                                         children: [
                                           Row(
@@ -579,6 +588,8 @@ class _HomeState extends State<Home> {
                                                           size: 15,
                                                         ),
                                                         Text(main['location']!),
+                                                        const Spacer(),
+                                                        const Icon(Iconsax.eye, size: 20, color: Colors.orange),
                                                       ],
                                                     ),
                                                     Row(
@@ -646,7 +657,7 @@ class _HomeState extends State<Home> {
                       },
                     ),
                   ),
-                ),
+                ):  Image.asset("assets/Backgrounds/notFound.jpg"),
               ],
             ),
           ),
