@@ -128,7 +128,7 @@ class _HomeState extends State<Home> {
           ClipPath(
             clipper: BottomShapeClipper(),
             child: Container(
-              color: Colors.deepPurple,
+              color: mainColor,
               height: screenHeight * 0.62,
             ),
           ),
@@ -145,7 +145,7 @@ class _HomeState extends State<Home> {
                       ),
                       Icon(
                         Iconsax.notification_bing5,
-                        color: Colors.white70,
+                        color: Colors.white,
                       ),
                     ],
                   ),
@@ -161,34 +161,34 @@ class _HomeState extends State<Home> {
                           decoration: const BoxDecoration(
                             boxShadow: [
                               BoxShadow(
-                                color: Colors.black26,
-                                blurRadius: 14,
+                                color: Colors.black12,
+                                blurRadius: 10,
                                 offset: Offset(0, 4),
                               ),
                             ],
                           ),
                           child: const TextField(
-                            style: TextStyle(color: Colors.white70),
+                            style: TextStyle(color: Colors.white),
                             decoration: InputDecoration(
-                              hintStyle: TextStyle(color: Colors.white70),
+                              hintStyle: TextStyle(color: Colors.white),
                               hintText: "Buscar...",
                               contentPadding: EdgeInsets.only(top: 5),
                               prefixIcon: Icon(
                                 Icons.search,
-                                color: Colors.white70,
+                                color: Colors.white,
                               ),
                               filled: true,
-                              fillColor: Colors.deepPurple,
+                              fillColor: mainColor,
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.all(Radius.circular(25)),
                               ),
                               enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.all(Radius.circular(25)),
-                                borderSide: BorderSide(color: Colors.white70),
+                                borderSide: BorderSide(color: Colors.white),
                               ),
                               focusedBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.all(Radius.circular(25)),
-                                borderSide: BorderSide(color: Colors.white70),
+                                borderSide: BorderSide(color: Colors.white),
                               ),
                             ),
                           ),
@@ -200,7 +200,7 @@ class _HomeState extends State<Home> {
                           EdgeInsets.symmetric(horizontal: 5.0, vertical: 0),
                       child: Icon(
                         Iconsax.filter,
-                        color: Colors.white70,
+                        color: Colors.white,
                       ),
                     ),
                   ],
@@ -212,7 +212,7 @@ class _HomeState extends State<Home> {
                       Text(
                         "Próximos Eventos",
                         style: TextStyle(
-                            color: Colors.white70,
+                            color: Colors.white,
                             fontSize: 19,
                             fontWeight: FontWeight.bold),
                       ),
@@ -220,7 +220,7 @@ class _HomeState extends State<Home> {
                       Text(
                         "Ver todos",
                         style: TextStyle(
-                          color: Colors.white70,
+                          color: Colors.white,
                           fontSize: 15,
                         ),
                       )
@@ -312,7 +312,7 @@ class _HomeState extends State<Home> {
                                   Text(
                                     item['title']!,
                                     style: const TextStyle(
-                                      color: Colors.white70,
+                                      color: Colors.white,
                                       fontWeight: FontWeight.bold,
                                       fontSize: 15,
                                     ),
@@ -320,7 +320,7 @@ class _HomeState extends State<Home> {
                                   Text(
                                     " - (${item['gender']})",
                                     style: const TextStyle(
-                                      color: Colors.white70,
+                                      color: Colors.white,
                                       fontWeight: FontWeight.bold,
                                       fontSize: 15,
                                     ),
@@ -333,7 +333,7 @@ class _HomeState extends State<Home> {
                                   Text(
                                     item['percent']!,
                                     style: const TextStyle(
-                                        color: Colors.white70,
+                                        color: Colors.white,
                                         fontWeight: FontWeight.bold,
                                         fontSize: 15),
                                   )
@@ -356,7 +356,7 @@ class _HomeState extends State<Home> {
                 Expanded(
                   child: Container(
                     margin: const EdgeInsets.only(left: 10, right: 10),
-                    color: backgorundBody,
+                    color: Colors.transparent,
                     child: ListView.builder(
                       itemCount: filteredList.length,
                       itemBuilder: (context, index) {
@@ -418,7 +418,7 @@ class _HomeState extends State<Home> {
                                                 padding: const EdgeInsets.only(
                                                     left: 17, right: 17),
                                                 width: 348,
-                                                color: backgroundColor2,
+                                                color: mainColor,
                                                 child:   Column(
                                                   children: [
                                                     Row(
@@ -427,7 +427,7 @@ class _HomeState extends State<Home> {
                                                           main['activityType']!,
                                                           style: const TextStyle(
                                                               color: Colors
-                                                                  .white70,
+                                                                  .white,
                                                               fontSize: 17),
                                                         ),
                                                         const Spacer(),
@@ -442,7 +442,7 @@ class _HomeState extends State<Home> {
                                                                 main['countLike']!,
                                                                 style: const TextStyle(
                                                                     color: Colors
-                                                                        .white70,
+                                                                        .white,
                                                                     fontSize:
                                                                         17),
                                                               ),
@@ -455,7 +455,7 @@ class _HomeState extends State<Home> {
                                                               child: Icon(
                                                               Iconsax.like_14,
                                                               color: Colors
-                                                                  .white70,
+                                                                  .white,
                                                               size: 25,
                                                             ),),
                                                           ],
@@ -469,14 +469,14 @@ class _HomeState extends State<Home> {
                                                             main['countRequest']!,
                                                             style: const TextStyle(
                                                                 color: Colors
-                                                                    .white70,
+                                                                    .white,
                                                                 fontSize:
                                                                 17),
                                                           ),
                                                         ),
                                                         const Icon(
                                                           Iconsax.user_cirlce_add,
-                                                          color: Colors.white70,
+                                                          color: Colors.white,
                                                           size: 25,
                                                         )
                                                       ],
@@ -613,28 +613,28 @@ class _HomeState extends State<Home> {
                                       padding: const EdgeInsets.all(16.0),
                                       child: AnimatedButton.strip(
                                         textStyle: const TextStyle(
-                                          color: Colors.black12,
+                                          color: Colors.white,
                                           fontSize: 20,
                                           fontWeight: FontWeight.bold,
                                         ),
-                                        stripColor: backgroundColorDark,
-                                        backgroundColor: Colors.black12,
+                                        stripColor: mainColor,
+                                        backgroundColor: Colors.black54,
                                         gradient: const LinearGradient(
                                           colors: [
-                                            backgroundColorDark,
-                                            Colors.deepPurpleAccent
+                                            mainColor,
+                                            mainColor
                                           ],
                                         ),
                                         selectedGradientColor:
                                             const LinearGradient(
                                           colors: [
-                                            Colors.deepPurpleAccent,
-                                            backgroundColorDark
+                                            mainColor,
+                                            mainColor
                                           ],
                                         ),
                                         text: _buttonTextAdd[index] ?? 'Enviar',
                                         isReverse: true,
-                                        selectedTextColor: Colors.white70,
+                                        selectedTextColor: Colors.white,
                                         stripTransitionType:
                                             StripTransitionType.LEFT_TO_RIGHT,
                                         selectedBackgroundColor:

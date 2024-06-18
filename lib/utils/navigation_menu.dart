@@ -1,15 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_animated_button/flutter_animated_button.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:musicmatch/utils/constants.dart';
+import 'package:musicmatch/views/profile.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 import '../views/home.dart';
+import 'image_picker_dialog.dart';
 
-class NavigationMenu extends StatelessWidget {
+class NavigationMenu extends StatefulWidget {
   const NavigationMenu({super.key});
+
+  @override
+  State<NavigationMenu> createState() => _NavigationMenuState();
+}
+
+class _NavigationMenuState extends State<NavigationMenu> {
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,37 +28,56 @@ class NavigationMenu extends StatelessWidget {
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: Padding(
-        padding: const EdgeInsets.only(top: 70.0),
+        padding: const EdgeInsets.only(top: 0.0),
         child: FloatingActionButton(
-          backgroundColor: Colors.deepPurpleAccent,
+          backgroundColor: mainColor,
           onPressed: () {
             _displaySchedule(context);
           },
           child: const Icon(
             Icons.add,
-            color: backgroundColor2,
+            color: Colors.white,
           ),
         ),
       ),
       bottomNavigationBar: Obx(
-        () => BottomAppBar(
-          child: SizedBox(
-            height: 80,
+            () => BottomAppBar(
+          color: mainColor,
+          child: NavigationBarTheme(
+            data: NavigationBarThemeData(
+              labelTextStyle: MaterialStateProperty.all(
+                const TextStyle(
+                  color: backgroundColorLight,
+                ),
+              ),
+            ),
             child: NavigationBar(
-              height: 80,
-              elevation: 0,
+              backgroundColor: mainColor,
+              indicatorColor: Colors.white,
+              elevation: 5,
               selectedIndex: controller.selectedIndex.value,
-              onDestinationSelected: (index) =>
-                  controller.onItemSelected(index),
+              onDestinationSelected: (index) => controller.onItemSelected(index),
               destinations: const [
-                NavigationDestination(icon: Icon(Iconsax.home), label: 'Home'),
                 NavigationDestination(
-                    icon: Icon(Iconsax.document_text), label: 'Solicitudes'),
-                SizedBox(width: 50),
+                  selectedIcon: Icon(Iconsax.home, color: mainColor),
+                  icon: Icon(Iconsax.home, color: backgroundColorLight),
+                  label: 'Home',
+                ),
                 NavigationDestination(
-                    icon: Icon(Iconsax.shop), label: 'Tienda'),
+                  selectedIcon: Icon(Iconsax.document_text, color: mainColor),
+                  icon: Icon(Iconsax.document_text, color: backgroundColorLight),
+                  label: 'Solicitudes',
+                ),
                 NavigationDestination(
-                    icon: Icon(Iconsax.user), label: 'Perfil'),
+                  selectedIcon: Icon(Iconsax.shop, color: mainColor),
+                  icon: Icon(Iconsax.shop, color: backgroundColorLight),
+                  label: 'Tienda',
+                ),
+                NavigationDestination(
+                  selectedIcon: Icon(Iconsax.user, color: mainColor),
+                  icon: Icon(Iconsax.user, color: backgroundColorLight),
+                  label: 'Perfil',
+                ),
               ],
             ),
           ),
@@ -62,23 +92,22 @@ class NavigationMenu extends StatelessWidget {
     );
   }
 
-  void _displaySchedule(context) {
+  void _displaySchedule(BuildContext context) {
     showModalBottomSheet(
-        isScrollControlled: false,
-        context: context,
-        backgroundColor: Colors.white,
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-        ),
-        builder: (context) {
-          return Padding(
-              padding: const EdgeInsets.all(15),
-              child: _getCustomizedDatePicker(context));
-        });
+      useSafeArea: true,
+      isScrollControlled: true,
+      context: context,
+      backgroundColor: Colors.white,
+      builder: (context) {
+        return SizedBox(
+          height: MediaQuery.of(context).size.height * 0.968,
+          child: _getCustomizedDatePicker(context),
+        );
+      },
+    );
   }
 
-  SfDateRangePicker _getCustomizedDatePicker(context) {
-    DateTime _selectedDate;
+  SfDateRangePicker _getCustomizedDatePicker(BuildContext context) {
     return SfDateRangePicker(
       backgroundColor: Colors.white70,
       showActionButtons: true,
@@ -88,39 +117,46 @@ class NavigationMenu extends StatelessWidget {
       onCancel: () {
         Navigator.of(context).pop();
       },
-      confirmText: "PUBLICAR",
-      cancelText: "CERRAR",
-      selectionShape: DateRangePickerSelectionShape.circle,
-      selectionMode: DateRangePickerSelectionMode.single,
-      selectionColor: backgroundColor2,
-      headerStyle: const DateRangePickerHeaderStyle(
-          backgroundColor: backgroundColor2,
-          textAlign: TextAlign.center,
-          textStyle: TextStyle(
-            fontSize: 20,
-            color: Colors.white,
-          )),
-      showNavigationArrow: true,
-      todayHighlightColor: backgroundColor2,
       toggleDaySelection: true,
+      minDate: DateTime.now(),
+      confirmText: "PUBLICAR",
+      cancelText: "CANCELAR",
+      selectionMode: DateRangePickerSelectionMode.single,
+      selectionColor: mainColor,
+      headerStyle: const DateRangePickerHeaderStyle(
+        backgroundColor: mainColor,
+        textAlign: TextAlign.center,
+        textStyle: TextStyle(
+          fontSize: 20,
+          color: Colors.white,
+        ),
+      ),
+      showNavigationArrow: true,
+      todayHighlightColor: mainColor,
       monthViewSettings: const DateRangePickerMonthViewSettings(
         firstDayOfWeek: 1,
-        // Lunes como el primer día de la semana
         numberOfWeeksInView: 6,
-        // Muestra 6 semanas en la vista mensual
         showTrailingAndLeadingDates: true,
-        // Muestra los días del mes anterior y siguiente
         viewHeaderHeight: 50,
-        // Altura de la cabecera de la vista mensual
-        dayFormat: 'E', // Formato de los días (por ejemplo, "Lun", "Mar", etc.)
+        dayFormat: 'E',
       ),
       onSelectionChanged: (DateRangePickerSelectionChangedArgs args) {
-         print(args.value);
+        if (args.value != null) _showDialog(context, args);
       },
       selectionTextStyle: const TextStyle(fontSize: 16),
       monthCellStyle: const DateRangePickerMonthCellStyle(
         textStyle: TextStyle(fontSize: 16),
       ),
+    );
+  }
+
+  void _showDialog(
+      BuildContext context, DateRangePickerSelectionChangedArgs args) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return ImagePickerDialog(selectedDate: args.value);
+      },
     );
   }
 }
@@ -150,8 +186,6 @@ class NavigationController extends GetxController {
     Container(
       color: Colors.yellow,
     ),
-    Container(
-      color: Colors.black,
-    ),
+    const Profile(),
   ];
 }

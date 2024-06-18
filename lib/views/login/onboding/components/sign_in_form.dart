@@ -118,7 +118,7 @@ class _SignInFormState extends State<SignInForm> {
                   child: ElevatedButton.icon(
                       onPressed: () => Get.to(const NavigationMenu()) ,
                       style: ElevatedButton.styleFrom(
-                          backgroundColor: backgroundColor2,
+                          backgroundColor: mainColor,
                           minimumSize: const Size(double.infinity, 56),
                           shape: const RoundedRectangleBorder(
                               borderRadius: BorderRadius.only(
