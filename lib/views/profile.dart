@@ -73,7 +73,7 @@ class Profile extends StatelessWidget {
           ),
           const SizedBox(height: 10),
           SizedBox(
-            height: 180,
+            height: 190,
             child: ListView.separated(
               physics: const BouncingScrollPhysics(),
               scrollDirection: Axis.horizontal,
@@ -125,21 +125,16 @@ class Profile extends StatelessWidget {
               itemCount: profileCompletionCards.length,
             ),
           ),
-          const SizedBox(height: 35),
           ...List.generate(
             customListTiles.length,
             (index) {
               final tile = customListTiles[index];
-              return Padding(
-                padding: const EdgeInsets.only(bottom: 5),
-                child: Card(
-                  elevation: 2,
+              return Card(color: mainColor,
                   child: ListTile(
                     leading: Icon(tile.icon),
                     title: Text(tile.title),
                     trailing: const Icon(Icons.chevron_right),
                   ),
-                ),
               );
             },
           )
@@ -163,9 +158,14 @@ class ProfileCompletionCard {
 
 List<ProfileCompletionCard> profileCompletionCards = [
   ProfileCompletionCard(
-    title: "Sube tu foto",
+    title: "Foto de Perfil",
     icon: Iconsax.camera,
     buttonText: "Cargar",
+  ),
+  ProfileCompletionCard(
+    title: "Repertorio Musical",
+    icon: Iconsax.music,
+    buttonText: "Agregar",
   ),
   ProfileCompletionCard(
     title: "Redes Sociales",
@@ -195,8 +195,8 @@ List<CustomListTile> customListTiles = [
     title: "Actividades",
   ),
   CustomListTile(
-    icon: Iconsax.map,
-    title: "Ubicación",
+    icon: Iconsax.microphone,
+    title: "Musicos",
   ),
   CustomListTile(
     title: "Notificaciones",

@@ -122,7 +122,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.transparent,
       body: Stack(
         children: <Widget>[
           ClipPath(
@@ -155,7 +155,7 @@ class _HomeState extends State<Home> {
                     Padding(
                       padding: const EdgeInsets.only(left: 20.0, right: 8),
                       child: SizedBox(
-                        width: 315,
+                        width:  MediaQuery.of(context).size.width * 0.787,
                         height: 35,
                         child:   Container(
                           decoration: const BoxDecoration(
@@ -368,8 +368,8 @@ class _HomeState extends State<Home> {
                             verticalOffset: 50.0,
                             child: FadeInAnimation(
                               child: Card(
-                                margin: const EdgeInsets.all(13.0),
-                                elevation: 20,
+                                margin: const EdgeInsets.only(left: 13.0,right: 13.0),
+                                elevation: 12,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(16.0),
                                 ),

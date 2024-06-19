@@ -26,23 +26,28 @@ class _NavigationMenuState extends State<NavigationMenu> {
   Widget build(BuildContext context) {
     final controller = Get.put(NavigationController());
     return Scaffold(
+      resizeToAvoidBottomInset: false,
+      extendBody: true,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.only(top: 0.0),
+      floatingActionButton:SizedBox(
+          width: 60,
+          height: 100,
+          child:Padding(
+        padding: const EdgeInsets.only(top: 70.0),
         child: FloatingActionButton(
-          backgroundColor: mainColor,
+          backgroundColor: backgroundColorLight,
           onPressed: () {
             _displaySchedule(context);
           },
-          child: const Icon(
+          child: const Icon(size: 25,
             Icons.add,
-            color: Colors.white,
+            color: mainColor,
           ),
         ),
-      ),
+      )),
       bottomNavigationBar: Obx(
-            () => BottomAppBar(
-          color: mainColor,
+        () => BottomAppBar(color: Colors.transparent,
+          padding: const EdgeInsets.all(5),
           child: NavigationBarTheme(
             data: NavigationBarThemeData(
               labelTextStyle: MaterialStateProperty.all(
@@ -51,34 +56,53 @@ class _NavigationMenuState extends State<NavigationMenu> {
                 ),
               ),
             ),
-            child: NavigationBar(
-              backgroundColor: mainColor,
-              indicatorColor: Colors.white,
-              elevation: 5,
-              selectedIndex: controller.selectedIndex.value,
-              onDestinationSelected: (index) => controller.onItemSelected(index),
-              destinations: const [
-                NavigationDestination(
-                  selectedIcon: Icon(Iconsax.home, color: mainColor),
-                  icon: Icon(Iconsax.home, color: backgroundColorLight),
-                  label: 'Home',
+            child: ClipRRect(
+              borderRadius: const BorderRadius.vertical(
+                  top: Radius.circular(20.0), bottom: Radius.circular(20.0)),
+              child: Container(
+                decoration: const BoxDecoration(
+                  color: mainColor,
+                  borderRadius: BorderRadius.vertical(
+                      top: Radius.circular(20.0),
+                      bottom: Radius.circular(
+                          20.0)),
                 ),
-                NavigationDestination(
-                  selectedIcon: Icon(Iconsax.document_text, color: mainColor),
-                  icon: Icon(Iconsax.document_text, color: backgroundColorLight),
-                  label: 'Solicitudes',
+                child: NavigationBar(
+                  backgroundColor: mainColor,
+                  indicatorColor: Colors.transparent,
+                  elevation: 0,
+                  selectedIndex: controller.selectedIndex.value,
+                  onDestinationSelected: (index) =>
+                      controller.onItemSelected(index),
+                  destinations: const [
+                    NavigationDestination(
+                      selectedIcon:
+                          Icon(Iconsax.home, color: backgroundColorLight),
+                      icon: Icon(Iconsax.home, color: Colors.grey),
+                      label: 'Home',
+                    ),
+                    NavigationDestination(
+                      selectedIcon: Icon(Iconsax.document_text,
+                          color: backgroundColorLight),
+                      icon: Icon(Iconsax.document_text, color: Colors.grey),
+                      label: 'Solicitudes',
+                    ),
+                    SizedBox(width: 10,),
+                    NavigationDestination(
+                      selectedIcon:
+                          Icon(Iconsax.shop, color: backgroundColorLight),
+                      icon: Icon(Iconsax.shop, color: Colors.grey),
+                      label: 'Tienda',
+                    ),
+                    NavigationDestination(
+                      selectedIcon:
+                          Icon(Iconsax.user, color: backgroundColorLight),
+                      icon: Icon(Iconsax.user, color: Colors.grey),
+                      label: 'Perfil',
+                    ),
+                  ],
                 ),
-                NavigationDestination(
-                  selectedIcon: Icon(Iconsax.shop, color: mainColor),
-                  icon: Icon(Iconsax.shop, color: backgroundColorLight),
-                  label: 'Tienda',
-                ),
-                NavigationDestination(
-                  selectedIcon: Icon(Iconsax.user, color: mainColor),
-                  icon: Icon(Iconsax.user, color: backgroundColorLight),
-                  label: 'Perfil',
-                ),
-              ],
+              ),
             ),
           ),
         ),
@@ -183,6 +207,7 @@ class NavigationController extends GetxController {
     Container(
       color: Colors.blue,
     ),
+    const SizedBox(width: 10,),
     Container(
       color: Colors.yellow,
     ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:musicmatch/utils/constants.dart';
 import 'package:musicmatch/utils/navigation_menu.dart';
 import 'package:musicmatch/views/login/onboding/onboding_screen.dart';
 
@@ -16,29 +17,11 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Music Match',
-      theme: ThemeData(
-        scaffoldBackgroundColor: Colors.white,
-        primaryColor: Colors.deepOrange,
+      theme: ThemeData(canvasColor: Colors.transparent,
+        primaryColor: mainColor,
         fontFamily: "mulaceno",
-        inputDecorationTheme: const InputDecorationTheme(
-          filled: true,
-          fillColor: Colors.white,
-          errorStyle: TextStyle(height: 0),
-          border: defaultInputBorder,
-          enabledBorder: defaultInputBorder,
-          focusedBorder: defaultInputBorder,
-          errorBorder: defaultInputBorder,
-        ),
       ),
       home: const NavigationMenu(),
     );
   }
 }
-
-const defaultInputBorder = OutlineInputBorder(
-  borderRadius: BorderRadius.all(Radius.circular(16)),
-  borderSide: BorderSide(
-    color: Color(0xFFDEE3F2),
-    width: 1,
-  ),
-);
