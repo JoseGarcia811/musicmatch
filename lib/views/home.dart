@@ -1,21 +1,16 @@
-import 'dart:ui';
-
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_animated_button/flutter_animated_button.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:iconsax/iconsax.dart';
 
+import '../utils/bottom_shape_clipper.dart';
 import '../utils/category_home_list.dart';
 import '../utils/constants.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
+  static const routeName = '/home';
 
   @override
   State<Home> createState() => _HomeState();
@@ -171,7 +166,7 @@ class _HomeState extends State<Home> {
                             style: TextStyle(color: Colors.white),
                             decoration: InputDecoration(
                               hintStyle: TextStyle(color: Colors.white),
-                              hintText: "Buscar...",
+                              hintText: "Buscar",
                               contentPadding: EdgeInsets.only(top: 5),
                               prefixIcon: Icon(
                                 Icons.search,
@@ -368,7 +363,7 @@ class _HomeState extends State<Home> {
                             verticalOffset: 50.0,
                             child: FadeInAnimation(
                               child: Card(
-                                margin: const EdgeInsets.only(left: 13.0,right: 13.0),
+                                margin: const EdgeInsets.only(left: 13.0,right: 13.0,bottom: 13),
                                 elevation: 12,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(16.0),
@@ -379,7 +374,7 @@ class _HomeState extends State<Home> {
                                       children: [
                                         Container(
                                           height: 150,
-                                          decoration:   BoxDecoration(
+                                          decoration: BoxDecoration(
                                             borderRadius: const BorderRadius.only(
                                               topLeft: Radius.circular(16.0),
                                               topRight: Radius.circular(16.0),
@@ -417,7 +412,7 @@ class _HomeState extends State<Home> {
                                             child: Container(
                                                 padding: const EdgeInsets.only(
                                                     left: 17, right: 17),
-                                                width: 348,
+                                                width: MediaQuery.of(context).size.width * 0.89,
                                                 color: mainColor,
                                                 child:   Column(
                                                   children: [
@@ -509,7 +504,7 @@ class _HomeState extends State<Home> {
                                         ],
                                       ),
                                     ),
-                                     Padding(
+                                    Padding(
                                       padding: const EdgeInsets.only(
                                           left: 16.0, right: 16.0),
                                       child: Column(
@@ -533,7 +528,7 @@ class _HomeState extends State<Home> {
                                         ],
                                       ),
                                     ),
-                                     Padding(
+                                    Padding(
                                       padding:const EdgeInsets.only(
                                           left: 16.0, right: 16.0),
                                       child: Column(
@@ -664,24 +659,5 @@ class _HomeState extends State<Home> {
         ],
       ),
     );
-  }
-}
-
-class BottomShapeClipper extends CustomClipper<Path> {
-  @override
-  Path getClip(Size size) {
-    Path path = Path();
-    Offset curveStartPoint = Offset(0, size.height * 0.85);
-    Offset curveEndPoint = Offset(size.width, size.height * 0.85);
-    path.lineTo(curveStartPoint.dx, curveStartPoint.dy);
-    path.quadraticBezierTo(
-        size.width / 2, size.height, curveEndPoint.dx, curveEndPoint.dy);
-    path.lineTo(size.width, 0);
-    return path;
-  }
-
-  @override
-  bool shouldReclip(CustomClipper<Path> oldClipper) {
-    return true;
   }
 }

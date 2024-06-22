@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:musicmatch/utils/constants.dart';
@@ -11,7 +10,7 @@ import 'image_picker_dialog.dart';
 
 class NavigationMenu extends StatefulWidget {
   const NavigationMenu({super.key});
-
+  static const routeName = '/navigation';
   @override
   State<NavigationMenu> createState() => _NavigationMenuState();
 }
@@ -26,31 +25,13 @@ class _NavigationMenuState extends State<NavigationMenu> {
   Widget build(BuildContext context) {
     final controller = Get.put(NavigationController());
     return Scaffold(
-      resizeToAvoidBottomInset: false,
       extendBody: true,
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton:SizedBox(
-          width: 60,
-          height: 100,
-          child:Padding(
-        padding: const EdgeInsets.only(top: 70.0),
-        child: FloatingActionButton(
-          backgroundColor: backgroundColorLight,
-          onPressed: () {
-            _displaySchedule(context);
-          },
-          child: const Icon(size: 25,
-            Icons.add,
-            color: mainColor,
-          ),
-        ),
-      )),
       bottomNavigationBar: Obx(
         () => BottomAppBar(color: Colors.transparent,
           padding: const EdgeInsets.all(5),
           child: NavigationBarTheme(
             data: NavigationBarThemeData(
-              labelTextStyle: MaterialStateProperty.all(
+              labelTextStyle: WidgetStateProperty.all(
                 const TextStyle(
                   color: backgroundColorLight,
                 ),
@@ -74,30 +55,46 @@ class _NavigationMenuState extends State<NavigationMenu> {
                   selectedIndex: controller.selectedIndex.value,
                   onDestinationSelected: (index) =>
                       controller.onItemSelected(index),
-                  destinations: const [
-                    NavigationDestination(
+                  destinations: [
+                    const NavigationDestination(
                       selectedIcon:
-                          Icon(Iconsax.home, color: backgroundColorLight),
-                      icon: Icon(Iconsax.home, color: Colors.grey),
+                          Icon(Iconsax.home, color: Colors.white),
+                      icon: Icon(Iconsax.home, color: Color(0xFF8c8c8c)),
                       label: 'Home',
                     ),
-                    NavigationDestination(
+                    const NavigationDestination(
                       selectedIcon: Icon(Iconsax.document_text,
                           color: backgroundColorLight),
-                      icon: Icon(Iconsax.document_text, color: Colors.grey),
+                      icon: Icon(Iconsax.document_text, color: Color(0xFF8c8c8c)),
                       label: 'Solicitudes',
                     ),
-                    SizedBox(width: 10,),
-                    NavigationDestination(
+                    SizedBox(
+                        width: 60,
+                        height: 100,
+                        child: Padding(
+                          padding: const EdgeInsets.only(bottom: 10),
+                          child: GestureDetector(
+                            onTap: () {
+                              _displaySchedule(context);
+                            },
+                            child: const Icon(
+                              size: 35,
+                              Iconsax.add_circle,
+                              color: backgroundColorLight,
+                            ),
+                          ),
+                       ),
+                    ),
+                    const NavigationDestination(
                       selectedIcon:
                           Icon(Iconsax.shop, color: backgroundColorLight),
-                      icon: Icon(Iconsax.shop, color: Colors.grey),
+                      icon: Icon(Iconsax.shop, color: Color(0xFF8c8c8c)),
                       label: 'Tienda',
                     ),
-                    NavigationDestination(
+                    const NavigationDestination(
                       selectedIcon:
                           Icon(Iconsax.user, color: backgroundColorLight),
-                      icon: Icon(Iconsax.user, color: Colors.grey),
+                      icon: Icon(Iconsax.user, color: Color(0xFF8c8c8c)),
                       label: 'Perfil',
                     ),
                   ],
@@ -107,8 +104,7 @@ class _NavigationMenuState extends State<NavigationMenu> {
           ),
         ),
       ),
-      body: PageView(
-        physics: const BouncingScrollPhysics(),
+      body: PageView(physics: const NeverScrollableScrollPhysics(),
         controller: controller.pageController,
         onPageChanged: controller.onPageChanged,
         children: controller.screens,
@@ -187,7 +183,7 @@ class _NavigationMenuState extends State<NavigationMenu> {
 
 class NavigationController extends GetxController {
   final Rx<int> selectedIndex = 0.obs;
-  final PageController pageController = PageController();
+  final PageController pageController = PageController(viewportFraction: 1.0,);
 
   void onPageChanged(int index) {
     selectedIndex.value = index;
@@ -195,11 +191,7 @@ class NavigationController extends GetxController {
 
   void onItemSelected(int index) {
     selectedIndex.value = index;
-    pageController.animateToPage(
-      index,
-      duration: const Duration(milliseconds: 500),
-      curve: Curves.decelerate,
-    );
+    pageController.jumpToPage(index);
   }
 
   final screens = [
